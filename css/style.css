@@ -428,6 +428,62 @@ nav.site-nav a.current {
   color: var(--ink-faint);
 }
 
+/* ---------- 용어사전 검색창 ---------- */
+.glossary-search {
+  position: relative;
+  margin-bottom: 30px;
+}
+.glossary-search .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.glossary-search input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  padding: 13px 16px 13px 42px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--ink);
+}
+.glossary-search input:focus {
+  outline: 2px solid var(--stamp);
+  outline-offset: 1px;
+}
+.glossary-count {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  margin: -12px 0 22px;
+}
+.no-results {
+  display: none;
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 14.5px;
+  padding: 40px 0;
+}
+
+/* ---------- 용어 카드 (경제용어 라벨) ---------- */
+.term-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- 홈 엔트리 카드: 도장 배지 없이 날짜만 ---------- */
+.entry-meta .plain-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+}
 /* ---------- 모바일 대응 ---------- */
 @media (max-width: 640px) {
   .hero .wrap { grid-template-columns: 1fr; }
