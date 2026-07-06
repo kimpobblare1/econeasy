@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>경제용어사전 | 오늘의경제공부</title>
-<meta name="description" content="오늘의경제공부에서 매일 다룬 경제용어를 모아둔 사전 페이지입니다.">
+<meta name="description" content="기준금리 뜻, PBR 뜻, 상속세 뜻 등 뉴스에 나온 경제용어를 검색해서 쉽게 찾아볼 수 있는 사전 페이지입니다.">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -31,103 +31,93 @@
   <div class="page-head">
     <h1>경제용어사전</h1>
   </div>
-  <p style="color:var(--ink-soft); font-size:15px; margin-bottom:28px;">
+  <p style="color:var(--ink-soft); font-size:15px; margin-bottom:24px;">
     매일 뉴스를 해설하며 정리한 용어들이 이곳에 하나씩 쌓여요.
-    글에서 처음 봤던 용어를 나중에 다시 찾아볼 때 이용해보세요.
+    궁금한 용어를 검색해서 찾아보세요.
   </p>
 
-  <section class="section">
-    <div class="section-head">
-      <h2>통화정책 / 금리</h2>
+  <div class="glossary-search">
+    <span class="search-icon" aria-hidden="true">🔍</span>
+    <input type="text" id="term-search" placeholder="궁금한 경제용어를 검색해보세요 (예: PBR, 기준금리, 상속세)" autocomplete="off">
+  </div>
+  <p class="glossary-count" id="term-count">전체 경제용어 10개</p>
+
+  <dl id="term-list">
+
+    <div class="term-card" data-search="pbr 주가순자산비율 저평가주 pbr뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>PBR 뜻 (주가순자산비율)</dt>
+      <dd>주가를 주당순자산으로 나눈 값이에요. 1배보다 낮으면 시장이 순자산가치보다 낮게 평가하고 있다는 뜻이라 '저평가주'로 불려요.
+        <br><a href="posts/day-003.html">→ 자세히 보기</a></dd>
     </div>
 
-    <dl>
-      <div class="term-card">
-        <span class="term-index">TERM 001 · DAY 001</span>
-        <dt>기준금리</dt>
-        <dd>한국은행이 정하는 '기준이 되는' 금리. 시중은행의 대출·예금 금리가 시차를 두고 이를 따라 움직여요.
-          <br><a href="posts/day-001.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 002 · DAY 001</span>
-        <dt>동결 / 인상 / 인하</dt>
-        <dd>동결은 유지, 인상은 인상(올림), 인하는 인하(내림)를 뜻해요.
-          <br><a href="posts/day-001.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 003 · DAY 001</span>
-        <dt>통화정책방향회의</dt>
-        <dd>한국은행 금융통화위원회가 기준금리를 결정하는 회의. 보통 1년에 8번 열려요.
-          <br><a href="posts/day-001.html">→ 자세히 보기</a></dd>
-      </div>
-    </dl>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <h2>물가 / 환율</h2>
-    </div>
-    <p style="color:var(--ink-faint); font-size:14px;">아직 다룬 용어가 없어요. 곧 채워질 예정이에요.</p>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <h2>주식 / 증시</h2>
-    </div>
-    <dl>
-      <div class="term-card">
-        <span class="term-index">TERM 008 · DAY 003</span>
-        <dt>PBR (주가순자산비율)</dt>
-        <dd>주가를 주당순자산으로 나눈 값이에요. 1배보다 낮으면 시장이 순자산가치보다 낮게 평가하고 있다는 뜻이라 '저평가주'로 불려요.
-          <br><a href="posts/day-003.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 009 · DAY 003</span>
-        <dt>상속세 / 증여세</dt>
-        <dd>재산을 물려받거나(상속) 무상으로 받을 때(증여) 내는 세금이에요. 재산의 평가 가치가 높게 잡힐수록 세금 부담도 커져요.
-          <br><a href="posts/day-003.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 010 · DAY 003</span>
-        <dt>비상장주식 평가방식</dt>
-        <dd>시가가 없는 비상장회사 주식 가치를 세법이 정한 계산식으로 매기는 방법. 저평가된 상장사에 이 방식을 적용하면 세금상 평가액이 실제 주가보다 높아질 수 있어요.
-          <br><a href="posts/day-003.html">→ 자세히 보기</a></dd>
-      </div>
-    </dl>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <h2>부동산 / 무역·산업</h2>
+    <div class="term-card" data-search="상속세 증여세 상속세뜻 증여세뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>상속세·증여세 뜻</dt>
+      <dd>재산을 물려받거나(상속) 무상으로 받을 때(증여) 내는 세금이에요. 재산의 평가 가치가 높게 잡힐수록 세금 부담도 커져요.
+        <br><a href="posts/day-003.html">→ 자세히 보기</a></dd>
     </div>
 
-    <dl>
-      <div class="term-card">
-        <span class="term-index">TERM 004 · DAY 002</span>
-        <dt>기업회생절차 (법정관리)</dt>
-        <dd>빚을 감당 못 하는 기업이 곧바로 문 닫는 대신, 법원 감독 아래 채무를 조정하며 회생 기회를 얻는 제도예요.
-          <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 005 · DAY 002</span>
-        <dt>회생계획안</dt>
-        <dd>법정관리 기업이 "이렇게 빚을 갚고 회사를 살리겠다"며 법원에 제출하는 구체적 계획서예요.
-          <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 006 · DAY 002</span>
-        <dt>회생절차 폐지 → 파산</dt>
-        <dd>법원이 회생계획 실현 가능성이 없다고 보면 절차를 폐지하고, 대개 파산 선고로 이어져요.
-          <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
-      </div>
-      <div class="term-card">
-        <span class="term-index">TERM 007 · DAY 002</span>
-        <dt>사모펀드 (PEF)</dt>
-        <dd>여러 투자자의 돈을 모아 기업을 인수·투자한 뒤 가치를 높여 되파는 투자회사예요.
-          <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
-      </div>
-    </dl>
-  </section>
+    <div class="term-card" data-search="비상장주식 평가방식 비상장주식뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>비상장주식 평가방식 뜻</dt>
+      <dd>시가가 없는 비상장회사 주식 가치를 세법이 정한 계산식으로 매기는 방법. 저평가된 상장사에 이 방식을 적용하면 세금상 평가액이 실제 주가보다 높아질 수 있어요.
+        <br><a href="posts/day-003.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="기업회생절차 법정관리 기업회생절차뜻 법정관리뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>기업회생절차(법정관리) 뜻</dt>
+      <dd>빚을 감당 못 하는 기업이 곧바로 문 닫는 대신, 법원 감독 아래 채무를 조정하며 회생 기회를 얻는 제도예요.
+        <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="회생계획안 회생계획안뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>회생계획안 뜻</dt>
+      <dd>법정관리 기업이 "이렇게 빚을 갚고 회사를 살리겠다"며 법원에 제출하는 구체적 계획서예요.
+        <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="회생절차 폐지 파산 파산뜻 회생절차폐지뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>회생절차 폐지·파산 뜻</dt>
+      <dd>법원이 회생계획 실현 가능성이 없다고 보면 절차를 폐지하고, 대개 파산 선고로 이어져요.
+        <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="사모펀드 pef 사모펀드뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.06</span>
+      <dt>사모펀드(PEF) 뜻</dt>
+      <dd>여러 투자자의 돈을 모아 기업을 인수·투자한 뒤 가치를 높여 되파는 투자회사예요.
+        <br><a href="posts/day-002.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="기준금리 기준금리뜻 금리">
+      <span class="term-eyebrow">경제용어 · 2026.07.04</span>
+      <dt>기준금리 뜻</dt>
+      <dd>한국은행이 정하는 '기준이 되는' 금리. 시중은행의 대출·예금 금리가 시차를 두고 이를 따라 움직여요.
+        <br><a href="posts/day-001.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="금리 동결 인상 인하 동결뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.04</span>
+      <dt>금리 동결·인상·인하 뜻</dt>
+      <dd>동결은 유지, 인상은 올림, 인하는 내림을 뜻해요.
+        <br><a href="posts/day-001.html">→ 자세히 보기</a></dd>
+    </div>
+
+    <div class="term-card" data-search="통화정책방향회의 금융통화위원회 통화정책방향회의뜻">
+      <span class="term-eyebrow">경제용어 · 2026.07.04</span>
+      <dt>통화정책방향회의 뜻</dt>
+      <dd>한국은행 금융통화위원회가 기준금리를 결정하는 회의. 보통 1년에 8번 열려요.
+        <br><a href="posts/day-001.html">→ 자세히 보기</a></dd>
+    </div>
+
+  </dl>
+
+  <p class="no-results" id="no-results">검색 결과가 없어요. 다른 단어로 검색해보세요.</p>
+
 </main>
 
 <footer class="site-footer">
@@ -140,6 +130,38 @@
     <div class="copyright">© 2026 TodayEcon. All rights reserved.</div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var input = document.getElementById('term-search');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.term-card'));
+  var countEl = document.getElementById('term-count');
+  var noResults = document.getElementById('no-results');
+  var total = cards.length;
+
+  function normalize(str) {
+    return str.toLowerCase().replace(/\s+/g, '');
+  }
+
+  input.addEventListener('input', function () {
+    var query = normalize(input.value);
+    var visibleCount = 0;
+
+    cards.forEach(function (card) {
+      var haystack = normalize(card.getAttribute('data-search') || '');
+      var titleText = normalize(card.querySelector('dt').textContent || '');
+      var match = query === '' || haystack.indexOf(query) !== -1 || titleText.indexOf(query) !== -1;
+      card.style.display = match ? '' : 'none';
+      if (match) visibleCount++;
+    });
+
+    countEl.textContent = query === ''
+      ? '전체 경제용어 ' + total + '개'
+      : '검색 결과 ' + visibleCount + '개';
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+})();
+</script>
 
 </body>
 </html>
