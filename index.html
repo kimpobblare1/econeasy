@@ -196,7 +196,7 @@
   .market-section .section-note{ font-size:12px; color:var(--ink-soft); margin:0 0 14px; }
 
   .two-col{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; }
-  .two-col-fixed{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
+  .two-col-fixed{ display:grid; grid-template-columns:max-content max-content; gap:14px; margin-bottom:18px; justify-content:start; }
   .sub-group-label{
     font-family:var(--font-mono); font-size:11.5px; font-weight:600; color:var(--ink-soft);
     letter-spacing:0.04em; margin:0 0 8px;
@@ -210,6 +210,8 @@
   .compact-table th, .compact-table td{ padding-left:10px; padding-right:10px; }
   .compact-table-md{ width:auto; max-width:560px; }
   .compact-table-md th, .compact-table-md td{ padding-left:10px; padding-right:10px; }
+  .compact-table-lg{ width:auto; max-width:640px; }
+  .compact-table-lg th, .compact-table-lg td{ padding-left:10px; padding-right:10px; }
   .data-table td{ padding:8px 12px; border-top:1px solid var(--border); }
   .data-table tr:nth-child(even) td{ background:rgba(28,53,80,0.025); }
   .num-cell{ font-family:var(--font-mono); text-align:right; }
@@ -487,7 +489,7 @@
       <div class="market-section">
         <h3>⑥ 공매도 상위종목</h3>
         <p class="section-note">공매도 거래대금 비중 상위 10</p>
-        <table class="data-table">
+        <table class="data-table compact-table-lg">
           <thead><tr><th>종목명</th><th class="num-th">현재가</th><th class="num-th">등락률</th><th class="num-th">공매도 거래대금(억원)</th><th class="num-th">공매도 비중</th></tr></thead>
           <tbody id="short-tbody"><tr><td colspan="5">불러오는 중...</td></tr></tbody>
         </table>
