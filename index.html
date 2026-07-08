@@ -206,7 +206,10 @@
   .data-table{ width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; font-size:13.5px; }
   .data-table th{ background:var(--navy); color:#fff; font-weight:600; text-align:left; padding:9px 12px; font-size:12px; }
   .data-table th.num-th{ text-align:right; }
-  .compact-table{ width:auto; max-width:380px; }
+  .compact-table{ width:auto; max-width:300px; }
+  .compact-table th, .compact-table td{ padding-left:10px; padding-right:10px; }
+  .compact-table-md{ width:auto; max-width:560px; }
+  .compact-table-md th, .compact-table-md td{ padding-left:10px; padding-right:10px; }
   .data-table td{ padding:8px 12px; border-top:1px solid var(--border); }
   .data-table tr:nth-child(even) td{ background:rgba(28,53,80,0.025); }
   .num-cell{ font-family:var(--font-mono); text-align:right; }
@@ -475,7 +478,7 @@
       <div class="market-section">
         <h3>⑤ 거래대금 상위</h3>
         <p class="section-note">거래대금 상위 10, 단위: 억원</p>
-        <table class="data-table">
+        <table class="data-table compact-table-md">
           <thead><tr><th>순위</th><th>종목명</th><th class="num-th">거래대금(억원)</th><th class="num-th">등락률</th></tr></thead>
           <tbody id="value-tbody"><tr><td colspan="4">불러오는 중...</td></tr></tbody>
         </table>
@@ -493,7 +496,7 @@
       <div class="market-section">
         <h3>⑦ 신용잔고 상위 (신용매매)</h3>
         <p class="section-note">신용거래 융자잔고 비율 상위 10</p>
-        <table class="data-table">
+        <table class="data-table compact-table-md">
           <thead><tr><th>종목명</th><th class="num-th">현재가</th><th class="num-th">등락률</th><th class="num-th">신용잔고 비율</th></tr></thead>
           <tbody id="credit-tbody"><tr><td colspan="4">불러오는 중...</td></tr></tbody>
         </table>
