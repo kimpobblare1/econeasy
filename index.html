@@ -206,7 +206,7 @@
   .data-table{ width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; font-size:13.5px; }
   .data-table th{ background:var(--navy); color:#fff; font-weight:600; text-align:left; padding:9px 12px; font-size:12px; }
   .data-table th.num-th{ text-align:right; }
-  .compact-table{ max-width:380px; }
+  .compact-table{ width:auto; max-width:380px; }
   .data-table td{ padding:8px 12px; border-top:1px solid var(--border); }
   .data-table tr:nth-child(even) td{ background:rgba(28,53,80,0.025); }
   .num-cell{ font-family:var(--font-mono); text-align:right; }
@@ -449,11 +449,11 @@
 
         <div class="sub-group-label">외국인</div>
         <div class="two-col two-col-fixed">
-          <table class="data-table">
+          <table class="data-table compact-table">
             <thead><tr><th>외국인 순매수</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="foreign-buy-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
-          <table class="data-table">
+          <table class="data-table compact-table">
             <thead><tr><th>외국인 순매도</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="foreign-sell-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
@@ -461,11 +461,11 @@
 
         <div class="sub-group-label">기관</div>
         <div class="two-col two-col-fixed">
-          <table class="data-table">
+          <table class="data-table compact-table">
             <thead><tr><th>기관 순매수</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="inst-buy-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
-          <table class="data-table">
+          <table class="data-table compact-table">
             <thead><tr><th>기관 순매도</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="inst-sell-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
