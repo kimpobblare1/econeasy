@@ -415,8 +415,8 @@
         <h3>② 업종별 증시 변동 요약</h3>
         <p class="section-note">코스피200 섹터별 지수와 등락률</p>
         <table class="data-table">
-          <thead><tr><th>업종</th><th>등락률</th><th>지수</th></tr></thead>
-          <tbody id="sector-tbody"><tr><td colspan="3">불러오는 중...</td></tr></tbody>
+          <thead><tr><th>업종</th><th>등락률</th></tr></thead>
+          <tbody id="sector-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
         </table>
       </div>
 
@@ -589,7 +589,7 @@ function renderMarketData(data){
   }
 
   renderTable('sector-tbody', data.sectors,
-    (r) => `<tr><td>${r.name}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${fmtNum(r.value)}</td></tr>`, 3);
+    (r) => `<tr><td>${r.name}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 2);
 
   renderTable('volume-tbody', data.volumeLeaders,
     (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.volume)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 3);
