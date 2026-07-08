@@ -3,117 +3,622 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오늘의경제공부 (TodayEcon) — 매일 5분, 경제뉴스 쉽게 이해하기</title>
-<meta name="description" content="경제 초보를 위한 하루 5분 경제뉴스 해설. 오늘의 경제뉴스와 핵심 경제용어를 매일 쉽게 정리해드립니다.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2244%22 fill=%22none%22 stroke=%22%23a8332a%22 stroke-width=%228%22/><text x=%2250%22 y=%2262%22 font-size=%2244%22 text-anchor=%22middle%22 fill=%22%23a8332a%22 font-family=%22serif%22>經</text></svg>">
-<link rel="stylesheet" href="css/style.css">
+<title>경제한장 — 오늘의 경제, 한 장으로</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --ink:#16232F;
+    --ink-soft:#5C6773;
+    --navy:#1C3550;
+    --navy-dark:#122437;
+    --bg:#EEF0F3;
+    --surface:#FFFFFF;
+    --border:#DDE1E7;
+    --amber:#D98C22;
+    --amber-soft:rgba(217,140,34,0.10);
+    --danger:#A3372B;
+    --up:#D64545;
+    --down:#2B62C4;
+    --font-display:'Noto Serif KR', serif;
+    --font-body:'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); line-height:1.7;
+  }
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{ outline:2px solid var(--navy); outline-offset:2px; }
+
+  .app-shell{ display:flex; min-height:100vh; align-items:flex-start; }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:230px; flex-shrink:0; background:var(--navy);
+    min-height:100vh; position:sticky; top:0;
+    display:flex; flex-direction:column; padding:26px 18px;
+  }
+  .brand{
+    font-family:var(--font-display); font-weight:700; font-size:19px;
+    color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:38px;
+  }
+  .brand-mark{ width:20px;height:20px;border-radius:50%; border:2px solid var(--amber); display:inline-block; }
+  .side-nav{ display:flex; flex-direction:column; gap:3px; }
+  .side-link{
+    text-align:left; background:none; border:none; border-radius:8px;
+    color:#B9C3CE; padding:11px 13px; font-size:14.5px; font-weight:600;
+    display:flex; align-items:center; gap:9px; transition:background .15s, color .15s;
+  }
+  .side-link:hover{ background:rgba(255,255,255,0.06); color:#fff; }
+  .side-link.active{ background:var(--amber-soft); color:#fff; }
+  .side-dot{ width:6px;height:6px;border-radius:50%; background:#5A6C80; flex-shrink:0; }
+  .side-link.active .side-dot{ background:var(--amber); }
+  .sidebar-foot{ margin-top:auto; font-size:11px; color:#7C8A99; line-height:1.6; padding-top:20px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation:none !important; }
+    .module-card, .news-card, .term-tile{ transition:none !important; }
+  }
+
+  /* ---------- MAIN ---------- */
+  .main{ flex:1; min-width:0; }
+
+  .ticker{
+    background:var(--navy-dark); color:#E7C98A; overflow:hidden;
+    white-space:nowrap; padding:9px 0; position:relative;
+  }
+  .ticker-track{
+    display:inline-block; padding-left:100%;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.02em;
+    animation:ticker 26s linear infinite;
+  }
+  @keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-100%); } }
+  .ticker-label{
+    position:absolute; right:14px; top:9px; background:var(--navy-dark);
+    font-family:var(--font-mono); font-size:10.5px; color:#8593A4; padding-left:10px;
+  }
+
+  .page{ display:none; padding:44px 40px 90px; max-width:980px; }
+  .page.active{ display:block; }
+
+  /* ---------- HOME ---------- */
+  .issue-tag{
+    display:inline-flex; font-family:var(--font-mono); font-size:12.5px; font-weight:600;
+    color:var(--navy); background:rgba(28,53,80,0.08); padding:6px 13px; border-radius:6px;
+    margin-bottom:20px;
+  }
+  .eyebrow{ font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.06em; color:var(--amber); font-weight:600; margin:0 0 8px; }
+  h1.hero{ font-family:var(--font-display); font-weight:900; font-size:clamp(30px,5vw,48px); line-height:1.2; margin:0 0 16px; }
+  .hero-sub{ font-size:15.5px; color:var(--ink-soft); max-width:540px; margin:0 0 40px; }
+
+  .module-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(270px,1fr)); gap:18px; margin-bottom:44px; }
+  .module-grid-single{ grid-template-columns:minmax(260px,380px); }
+  .home-section-label{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); letter-spacing:.04em; margin:0 0 12px; }
+  .home-news-card{ margin-bottom:32px; }
+  .home-more-link{ margin-top:6px; display:inline-block; }
+  .module-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:24px; position:relative; overflow:hidden;
+    box-shadow:0 1px 2px rgba(20,30,40,0.04);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .module-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+  .module-card.c-news::before{ background:var(--navy); }
+  .module-card.c-term::before{ background:var(--amber); }
+  .module-card:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(20,30,40,0.09); }
+  .module-card h3{ font-family:var(--font-display); font-size:17.5px; margin:14px 0 10px; }
+  .module-card p{ font-size:14px; color:var(--ink-soft); margin:0 0 16px; }
+  .link-arrow{ font-size:13.5px; font-weight:600; color:var(--navy); background:none; border:none; padding:0; }
+  .link-arrow:hover{ text-decoration:underline; }
+
+  .subscribe{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:26px; position:relative; overflow:hidden;
+  }
+  .subscribe::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--amber); }
+  .subscribe h4{ font-family:var(--font-display); font-size:16.5px; margin:10px 0 8px; }
+  .subscribe p{ font-size:13.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .sub-row{ display:flex; gap:8px; max-width:400px; flex-wrap:wrap; }
+  .sub-row input{ flex:1; min-width:180px; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; }
+  .sub-row button{ background:var(--navy); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:14px; font-weight:600; }
+  .proto-note{ font-size:11.5px; color:var(--ink-soft); margin-top:10px; }
+
+  /* ---------- NEWS ---------- */
+  .page-title{ font-family:var(--font-display); font-weight:700; font-size:26px; margin:0 0 6px; }
+  .page-sub{ color:var(--ink-soft); font-size:14px; margin:0 0 32px; }
+
+  .news-card{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:24px; margin-bottom:18px;
+    position:relative; overflow:hidden;
+  }
+  .news-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--navy); }
+  .news-meta{ display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .date-chip{ font-family:var(--font-mono); font-size:12px; color:var(--navy); background:rgba(28,53,80,0.08); border-radius:5px; padding:3px 9px; }
+  .sample-chip{ font-family:var(--font-mono); font-size:11px; color:var(--danger); border:1px solid var(--danger); border-radius:5px; padding:2px 8px; }
+  .news-headline{ font-family:var(--font-display); font-size:19px; font-weight:700; margin:0 0 14px; }
+  .summary-list{ list-style:none; margin:0 0 16px; padding:0; }
+  .summary-list li{ display:flex; gap:10px; font-size:14px; padding:6px 0; border-top:1px solid var(--border); }
+  .summary-list li:first-child{ border-top:none; }
+  .summary-num{ font-family:var(--font-mono); color:var(--amber); font-weight:600; flex-shrink:0; }
+  .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .term-chip{
+    font-size:12px; font-weight:600; background:none; border:1px solid var(--amber); color:#9C6519;
+    border-radius:14px; padding:4px 12px; transition:background .15s, color .15s;
+  }
+  .term-chip:hover{ background:var(--amber); color:#fff; }
+
+  /* ---------- TERMS ---------- */
+  .search-wrap{
+    display:flex; align-items:center; gap:8px; margin-bottom:32px;
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:11px 16px;
+  }
+  .search-wrap input{ flex:1; border:none; background:transparent; font-size:14.5px; }
+  .search-wrap input:focus{ outline:none; }
+  .search-icon{ color:var(--ink-soft); font-size:14px; }
+
+  .term-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:18px; }
+  .term-tile{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:22px; position:relative; overflow:hidden;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .term-tile::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--amber); }
+  .term-tile:hover{ transform:translateY(-2px); box-shadow:0 10px 22px rgba(20,30,40,0.08); }
+  .term-tile.highlight{ box-shadow:0 0 0 3px var(--amber); }
+  .term-cat{ font-family:var(--font-mono); font-size:10.5px; color:var(--navy); letter-spacing:0.04em; display:block; margin:12px 0 8px; }
+  .term-name{ font-family:var(--font-display); font-weight:700; font-size:20px; margin:0 0 10px; }
+  .term-def{ font-size:14px; margin:0 0 12px; }
+  .term-analogy-label{ font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); letter-spacing:0.03em; display:block; margin-bottom:4px; }
+  .term-analogy{ font-size:13px; background:var(--amber-soft); border-radius:8px; padding:9px 11px; margin:0; color:#5B4419; }
+
+  /* ---------- MARKET CHECK ---------- */
+  .demo-banner{
+    background:rgba(163,55,43,0.08); border:1px solid rgba(163,55,43,0.35); color:var(--danger);
+    border-radius:10px; padding:13px 16px; font-size:13px; font-weight:600; margin-bottom:28px;
+  }
+  .stat-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:32px; }
+  .stat-card{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .stat-label{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); margin-bottom:8px; }
+  .stat-value{ font-family:var(--font-mono); font-size:25px; font-weight:600; color:var(--ink); }
+  .stat-change{ font-family:var(--font-mono); font-size:13px; font-weight:600; margin-top:4px; }
+  .stat-change.up{ color:var(--up); }
+  .stat-change.down{ color:var(--down); }
+
+  .market-section{ margin-bottom:34px; }
+  .market-section h3{ font-family:var(--font-display); font-size:16.5px; margin:0 0 4px; }
+  .market-section .section-note{ font-size:12px; color:var(--ink-soft); margin:0 0 14px; }
+
+  .two-col{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; }
+
+  .data-table{ width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; font-size:13.5px; }
+  .data-table th{ background:var(--navy); color:#fff; font-weight:600; text-align:left; padding:9px 12px; font-size:12px; }
+  .data-table td{ padding:8px 12px; border-top:1px solid var(--border); }
+  .data-table tr:nth-child(even) td{ background:rgba(28,53,80,0.025); }
+  .num-cell{ font-family:var(--font-mono); text-align:right; }
+  .chg-up{ color:var(--up); font-weight:600; font-family:var(--font-mono); }
+  .chg-down{ color:var(--down); font-weight:600; font-family:var(--font-mono); }
+
+  footer{ text-align:center; padding:26px 40px 60px; font-size:12px; color:var(--ink-soft); }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width:760px){
+    .app-shell{ flex-direction:column; }
+    .sidebar{ width:100%; min-height:auto; position:sticky; top:0; z-index:50; padding:14px 16px; }
+    .brand{ margin-bottom:14px; }
+    .side-nav{ flex-direction:row; overflow-x:auto; gap:6px; }
+    .side-link{ white-space:nowrap; }
+    .sidebar-foot{ display:none; }
+    .page{ padding:30px 20px 70px; }
+  }
+</style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <div class="brand">
-      <span class="brand-mark">TODAY-ECON</span>
-      <div>
-        <div class="brand-name">오늘의경제공부</div>
-        <div class="brand-tagline">매일 한 장씩 쌓는 경제 상식</div>
-      </div>
-    </div>
-    <nav class="site-nav">
-      <a href="index.html" class="current">홈</a>
-      <a href="glossary.html">용어사전</a>
-      <a href="about.html">소개</a>
-      <a href="contact.html">문의</a>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"></span>경제한장</div>
+    <nav class="side-nav">
+      <button class="side-link active" data-page="home" onclick="showPage('home')"><span class="side-dot"></span>홈</button>
+      <button class="side-link" data-page="news" onclick="showPage('news')"><span class="side-dot"></span>뉴스요약</button>
+      <button class="side-link" data-page="terms" onclick="showPage('terms')"><span class="side-dot"></span>용어사전</button>
+      <button class="side-link" data-page="market" onclick="showPage('market')"><span class="side-dot"></span>시황체크</button>
     </nav>
+    <div class="sidebar-foot">경제한장 v0.1<br>프로토타입 데모</div>
+  </aside>
+
+  <div class="main">
+    <div class="ticker">
+      <div class="ticker-track">코스피 2,847.32 ▲0.42%  ·  원/달러 환율 1,362.50 ▼0.15%  ·  기준금리 2.50% 동결  ·  국고채 3년물 2.81% ▲0.03%p  ·  코스피 2,847.32 ▲0.42%  ·  원/달러 환율 1,362.50 ▼0.15%</div>
+      <span class="ticker-label">예시 데이터</span>
+    </div>
+
+    <!-- ================= HOME ================= -->
+    <section id="page-home" class="page active">
+      <div class="issue-tag">ISSUE No.014 · 2026.07.07 (TUE)</div>
+      <p class="eyebrow">매일 아침, 경제를 한 장으로</p>
+      <h1 class="hero">오늘의 경제,<br>한 장으로 끝.</h1>
+      <p class="hero-sub">어려운 경제뉴스도 3줄 요약과 쉬운 용어사전이면 5분 컷. 경제학 전공자가 실전 재테크 시선으로 풀어드려요.</p>
+
+      <div class="home-section-label">오늘의 뉴스요약</div>
+      <article class="news-card home-news-card">
+        <div class="news-meta"><span class="date-chip">2026.07.07 (화)</span></div>
+        <h3 class="news-headline">스테이블코인이 뭐길래 삼성전자까지 뛰어들었나</h3>
+        <ul class="summary-list">
+          <li><span class="summary-num">①</span><span>삼성전자·신한금융·두나무 등 국내 13개 기업이 달러 기반 스테이블코인 연합 'OUSD'에 참여했다.</span></li>
+          <li><span class="summary-num">②</span><span>비자·마스터카드·구글 등 전세계 140여개 기업이 만든 '오픈스탠다드' 컨소시엄이 이끈다.</span></li>
+          <li><span class="summary-num">③</span><span>국내 원화 스테이블코인은 아직 제도·인프라가 정비되지 않아 실사용률이 낮은 편이다.</span></li>
+        </ul>
+        <div class="chip-row">
+          <button class="term-chip" onclick="jumpToTerm('term-stablecoin')">스테이블코인</button>
+          <button class="term-chip" onclick="jumpToTerm('term-consortium')">컨소시엄</button>
+          <button class="term-chip" onclick="jumpToTerm('term-reserve')">준비자산</button>
+        </div>
+        <button class="link-arrow home-more-link" onclick="showPage('news')">지난 뉴스요약 더 보기 →</button>
+      </article>
+
+      <div class="module-grid module-grid-single">
+        <div class="module-card c-term">
+          <h3>오늘의 용어 · 스테이블코인</h3>
+          <p>가격이 안 흔들리게 특정 자산에 고정해놓은 코인. 상품권에 비유하면 쉬워져요.</p>
+          <button class="link-arrow" onclick="jumpToTerm('term-stablecoin')">사전 더 보기 →</button>
+        </div>
+      </div>
+
+      <div class="subscribe">
+        <h4>이메일로 매일 아침 받아보기</h4>
+        <p>뉴스요약 + 용어사전을 요약해서 보내드려요. (프로토타입 데모 — 실제 발송은 되지 않아요)</p>
+        <div class="sub-row">
+          <input type="email" placeholder="you@email.com" aria-label="이메일 주소">
+          <button onclick="alert('프로토타입 데모입니다. 실제 서비스에서 연결 예정이에요!')">구독하기</button>
+        </div>
+        <p class="proto-note">※ 지금은 화면 구성만 보여주는 프로토타입이에요.</p>
+      </div>
+    </section>
+
+    <!-- ================= NEWS ================= -->
+    <section id="page-news" class="page">
+      <h2 class="page-title">뉴스요약</h2>
+      <p class="page-sub">오늘 꼭 알아야 할 경제뉴스를 3줄로 정리했어요. 모르는 용어는 태그를 눌러보세요.</p>
+
+      <article class="news-card">
+        <div class="news-meta"><span class="date-chip">2026.07.07 (화)</span></div>
+        <h3 class="news-headline">스테이블코인이 뭐길래 삼성전자까지 뛰어들었나</h3>
+        <ul class="summary-list">
+          <li><span class="summary-num">①</span><span>삼성전자·신한금융·두나무 등 국내 13개 기업이 달러 기반 스테이블코인 연합 'OUSD'에 참여했다.</span></li>
+          <li><span class="summary-num">②</span><span>비자·마스터카드·구글 등 전세계 140여개 기업이 만든 '오픈스탠다드' 컨소시엄이 이끈다.</span></li>
+          <li><span class="summary-num">③</span><span>국내 원화 스테이블코인은 아직 제도·인프라가 정비되지 않아 실사용률이 낮은 편이다.</span></li>
+        </ul>
+        <div class="chip-row">
+          <button class="term-chip" onclick="jumpToTerm('term-stablecoin')">스테이블코인</button>
+          <button class="term-chip" onclick="jumpToTerm('term-consortium')">컨소시엄</button>
+          <button class="term-chip" onclick="jumpToTerm('term-reserve')">준비자산</button>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-meta">
+          <span class="date-chip">2026.07.06 (월)</span>
+          <span class="sample-chip">예시 콘텐츠</span>
+        </div>
+        <h3 class="news-headline">기준금리, 이번엔 동결될까 — 체크할 신호 3가지</h3>
+        <ul class="summary-list">
+          <li><span class="summary-num">①</span><span>(예시) 이번 달 금통위 회의를 앞두고 시장은 동결에 무게를 두고 있다.</span></li>
+          <li><span class="summary-num">②</span><span>(예시) 물가와 환율 지표가 금리 결정의 핵심 변수로 꼽힌다.</span></li>
+          <li><span class="summary-num">③</span><span>(예시) 대출·예적금 금리에 미치는 영향을 함께 짚어볼 필요가 있다.</span></li>
+        </ul>
+        <div class="chip-row">
+          <button class="term-chip" onclick="jumpToTerm('term-depegging')">디페깅</button>
+          <button class="term-chip" onclick="jumpToTerm('term-coinrun')">코인런</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================= TERMS ================= -->
+    <section id="page-terms" class="page">
+      <h2 class="page-title">용어사전</h2>
+      <p class="page-sub">뉴스에 나온 어려운 말, 실생활 비유로 쉽게 풀었어요.</p>
+
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" placeholder="용어를 검색해보세요 (예: 페깅)" oninput="filterTerms(this.value)" aria-label="용어 검색">
+      </div>
+
+      <div class="term-grid" id="term-grid">
+        <div class="term-tile" id="term-stablecoin">
+          <span class="term-cat">화폐·결제</span>
+          <h3 class="term-name">스테이블코인</h3>
+          <p class="term-def">가격이 안 흔들리게 특정 자산(주로 달러)에 고정해놓은 코인이에요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">환율이 아무리 바뀌어도 "이 상품권은 항상 1만원"이라고 못박아둔 상품권 같은 거예요.</p>
+        </div>
+        <div class="term-tile" id="term-pegging">
+          <span class="term-cat">화폐·결제</span>
+          <h3 class="term-name">페깅</h3>
+          <p class="term-def">코인 가치를 달러 같은 자산에 묶어두는 방식이에요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">"1코인 = 1달러로 항상 바꿔주겠다"는 약속이 바로 페깅이에요.</p>
+        </div>
+        <div class="term-tile" id="term-reserve">
+          <span class="term-cat">화폐·결제</span>
+          <h3 class="term-name">준비자산</h3>
+          <p class="term-def">발행사가 페깅 약속을 지키기 위해 미리 쌓아두는 담보예요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">상품권 회사가 환불 요청에 대비해 은행에 현금을 넣어두는 것과 같아요.</p>
+        </div>
+        <div class="term-tile" id="term-consortium">
+          <span class="term-cat">기업·거버넌스</span>
+          <h3 class="term-name">컨소시엄</h3>
+          <p class="term-def">여러 기업이 하나의 목표를 위해 공동으로 만든 조직이에요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">오픈스탠다드가 삼성전자·비자·구글 등 140여개 기업이 모인 컨소시엄이에요.</p>
+        </div>
+        <div class="term-tile" id="term-acceptance">
+          <span class="term-cat">결제 인프라</span>
+          <h3 class="term-name">가맹점 수용률</h3>
+          <p class="term-def">그 결제수단을 실제로 받아주는 가게가 전체 중 몇 %인지를 뜻해요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">아무리 좋은 카드도 받아주는 가게가 없으면 무용지물이겠죠?</p>
+        </div>
+        <div class="term-tile" id="term-depegging">
+          <span class="term-cat">금융안정</span>
+          <h3 class="term-name">디페깅</h3>
+          <p class="term-def">"1코인=1달러" 약속이 깨져서 가치가 실제로 흔들리는 현상이에요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">상품권 회사가 갑자기 "9천원만 쳐드려요"라고 말을 바꾸는 상황이에요.</p>
+        </div>
+        <div class="term-tile" id="term-coinrun">
+          <span class="term-cat">금융안정</span>
+          <h3 class="term-name">코인런</h3>
+          <p class="term-def">은행런처럼, 너도나도 한꺼번에 현금화(상환)를 요구하는 사태예요.</p>
+          <span class="term-analogy-label">쉽게 말하면</span>
+          <p class="term-analogy">한 번에 다 같이 환불받으러 몰려가면 회사가 감당 못 할 수도 있어요.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MARKET CHECK ================= -->
+    <section id="page-market" class="page">
+      <h2 class="page-title">시황체크</h2>
+      <p class="page-sub">코스피·코스닥부터 수급 동향까지, 오늘 시장을 한눈에 정리했어요.</p>
+      <div class="demo-banner" id="market-status-banner">⏳ 시황 데이터를 불러오는 중...</div>
+
+      <div class="market-section">
+        <h3>① 지수 · 환율</h3>
+        <p class="section-note">코스피 · 코스닥 종가와 원/달러 환율 (실시간, 60초 캐시)</p>
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-label">KOSPI</div>
+            <div class="stat-value" id="kospi-value">-</div>
+            <div class="stat-change" id="kospi-change">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">KOSDAQ</div>
+            <div class="stat-value" id="kosdaq-value">-</div>
+            <div class="stat-change" id="kosdaq-change">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">원/달러 환율</div>
+            <div class="stat-value" id="usdkrw-value">-</div>
+            <div class="stat-change" id="usdkrw-change">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="market-section">
+        <h3>② 업종별 증시 변동 요약</h3>
+        <p class="section-note">코스피200 섹터별 지수와 등락률</p>
+        <table class="data-table">
+          <thead><tr><th>업종</th><th>등락률</th><th>지수</th></tr></thead>
+          <tbody id="sector-tbody"><tr><td colspan="3">불러오는 중...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="market-section">
+        <h3>③ 거래량·상한가·하한가 분석</h3>
+        <p class="section-note">거래량 상위 10 및 상한가·하한가 근접 종목</p>
+        <div class="two-col">
+          <table class="data-table">
+            <thead><tr><th>거래량 상위</th><th>거래량</th><th>등락률</th></tr></thead>
+            <tbody id="volume-tbody"><tr><td colspan="3">불러오는 중...</td></tr></tbody>
+          </table>
+          <table class="data-table">
+            <thead><tr><th>상한가 / 하한가</th><th>등락률</th><th>구분</th></tr></thead>
+            <tbody id="limit-tbody"><tr><td colspan="3">불러오는 중...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="market-section">
+        <h3>④ 외국인 · 기관 순매수·순매도 TOP</h3>
+        <p class="section-note">TOP 10, 금액 단위: 억원</p>
+        <div class="two-col">
+          <table class="data-table">
+            <thead><tr><th>외국인 순매수</th><th>금액(억원)</th></tr></thead>
+            <tbody id="foreign-buy-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
+          </table>
+          <table class="data-table">
+            <thead><tr><th>외국인 순매도</th><th>금액(억원)</th></tr></thead>
+            <tbody id="foreign-sell-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
+          </table>
+          <table class="data-table">
+            <thead><tr><th>기관 순매수</th><th>금액(억원)</th></tr></thead>
+            <tbody id="inst-buy-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
+          </table>
+          <table class="data-table">
+            <thead><tr><th>기관 순매도</th><th>금액(억원)</th></tr></thead>
+            <tbody id="inst-sell-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="market-section">
+        <h3>⑤ 거래대금 상위</h3>
+        <p class="section-note">거래대금 상위 10, 단위: 억원</p>
+        <table class="data-table">
+          <thead><tr><th>순위</th><th>종목명</th><th>거래대금(억원)</th><th>등락률</th></tr></thead>
+          <tbody id="value-tbody"><tr><td colspan="4">불러오는 중...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="market-section">
+        <h3>⑥ 공매도 상위종목</h3>
+        <p class="section-note">공매도 거래대금 비중 상위 10</p>
+        <table class="data-table">
+          <thead><tr><th>종목명</th><th>현재가</th><th>등락률</th><th>공매도 비중</th></tr></thead>
+          <tbody id="short-tbody"><tr><td colspan="4">불러오는 중...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="market-section">
+        <h3>⑦ 신용잔고 상위 (신용매매)</h3>
+        <p class="section-note">신용거래 융자잔고 비율 상위 10</p>
+        <table class="data-table">
+          <thead><tr><th>종목명</th><th>현재가</th><th>등락률</th><th>신용잔고 비율</th><th>전일대비 증감</th></tr></thead>
+          <tbody id="credit-tbody"><tr><td colspan="5">불러오는 중...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>본 사이트의 뉴스·용어 설명은 정보 제공 목적이며, 시황체크 수치는 한국투자증권 Open API·한국수출입은행 Open API 기반입니다. 투자 판단의 책임은 본인에게 있습니다.</footer>
   </div>
-</header>
+</div>
 
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <h1>어려운 경제뉴스,<br><em>하루 5분</em>이면 충분해요.</h1>
-      <p>매일 경제뉴스 1~2개를 골라 낯선 용어부터 쉽게 풀어드려요. 도장 찍듯 하나씩 쌓인 용어가 벌써 열 개, 조금씩 늘려가다 보면 어느새 경제가 편해질 거예요.</p>
-    </div>
-    <div class="stamp" aria-hidden="true">
-      <span class="stamp-day">010</span>
-      <span class="stamp-label">용어 정리</span>
-    </div>
-  </div>
-</section>
+<script>
+const MARKET_API_URL = 'https://get-market-check-813625362143.asia-northeast3.run.app';
 
-<main class="wrap">
-  <section class="section">
-    <div class="section-head">
-      <h2>최근 기록</h2>
-      <span class="see-all">전체 목록 ↓</span>
-    </div>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.side-link').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelector('.side-link[data-page="' + id + '"]').classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+  if (id === 'market') loadMarketCheck();
+}
+function jumpToTerm(termId){
+  showPage('terms');
+  setTimeout(() => {
+    const el = document.getElementById(termId);
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'center'});
+    el.classList.add('highlight');
+    setTimeout(() => el.classList.remove('highlight'), 1600);
+  }, 50);
+}
+function filterTerms(query){
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('.term-tile').forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
 
-    <div class="entry-list">
+// ---------- 시황체크 실데이터 연동 ----------
+function fmtNum(n){
+  const num = Number(n);
+  if (isNaN(num)) return '-';
+  return num.toLocaleString('ko-KR');
+}
+function fmtPct(p){
+  const num = Number(p);
+  if (isNaN(num)) return '-';
+  return (num > 0 ? '+' : '') + num.toFixed(2) + '%';
+}
+function pctClass(p){
+  const num = Number(p);
+  if (isNaN(num)) return '';
+  return num >= 0 ? 'chg-up' : 'chg-down';
+}
+function eok(millionWon){ // 백만원 -> 억원 환산
+  const num = Number(millionWon);
+  if (isNaN(num)) return '-';
+  return (num/100).toLocaleString('ko-KR', {maximumFractionDigits:0});
+}
+function renderTable(tbodyId, rows, rowFn, colspan){
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  if (!rows || rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align:center;color:var(--ink-soft);">해당 데이터가 없습니다</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = rows.map(rowFn).join('');
+}
 
-      <a class="entry" href="posts/day-003.html">
-        <div class="entry-meta">
-          <span class="plain-date">2026.07.06</span>
-        </div>
-        <h3>PBR 0.8배 미만이면 상속세 폭탄? '주가누르기 방지법' 쉽게 정리</h3>
-        <p>PBR(주가순자산비율)이 뭔지부터, 저평가주에 상속세를 더 물리자는 법안이 왜 논란인지까지 정리했어요.</p>
-        <div class="tag-row">
-          <span class="tag">PBR</span>
-          <span class="tag">상속세</span>
-          <span class="tag">저평가주</span>
-        </div>
-      </a>
+let marketLoading = false;
+async function loadMarketCheck(){
+  if (marketLoading) return;
+  marketLoading = true;
+  const banner = document.getElementById('market-status-banner');
+  banner.textContent = '⏳ 시황 데이터를 불러오는 중...';
+  try {
+    const res = await fetch(MARKET_API_URL);
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || '알 수 없는 오류');
+    renderMarketData(json.data);
+    const updated = new Date(json.data.updatedAt).toLocaleString('ko-KR');
+    banner.textContent = (json.cached ? '🔄 ' : '✅ ') + '실시간 데이터 · 기준시각: ' + updated + (json.cached ? ' (60초 캐시 사용)' : '');
+  } catch (err) {
+    console.error(err);
+    banner.textContent = '⚠ 데이터를 불러오지 못했어요: ' + err.message;
+  } finally {
+    marketLoading = false;
+  }
+}
 
-      <a class="entry" href="posts/day-002.html">
-        <div class="entry-meta">
-          <span class="plain-date">2026.07.06</span>
-        </div>
-        <h3>홈플러스 법정관리 폐지, '파산 수순'이라는 게 무슨 뜻일까</h3>
-        <p>회생절차 폐지, 회생계획안, 사모펀드(PEF)까지 — 홈플러스 뉴스 하나로 기업이 무너지는 과정에서 쓰이는 용어들을 정리했어요.</p>
-        <div class="tag-row">
-          <span class="tag">홈플러스</span>
-          <span class="tag">기업회생절차</span>
-          <span class="tag">사모펀드</span>
-        </div>
-      </a>
+function renderMarketData(data){
+  if (data.indices?.kospi) {
+    document.getElementById('kospi-value').textContent = fmtNum(data.indices.kospi.value);
+    const el = document.getElementById('kospi-change');
+    el.textContent = (Number(data.indices.kospi.change) >= 0 ? '▲ ' : '▼ ') + fmtNum(Math.abs(Number(data.indices.kospi.change))) + ' (' + fmtPct(data.indices.kospi.changePct) + ')';
+    el.className = 'stat-change ' + (pctClass(data.indices.kospi.changePct) === 'chg-up' ? 'up' : 'down');
+  }
+  if (data.indices?.kosdaq) {
+    document.getElementById('kosdaq-value').textContent = fmtNum(data.indices.kosdaq.value);
+    const el = document.getElementById('kosdaq-change');
+    el.textContent = (Number(data.indices.kosdaq.change) >= 0 ? '▲ ' : '▼ ') + fmtNum(Math.abs(Number(data.indices.kosdaq.change))) + ' (' + fmtPct(data.indices.kosdaq.changePct) + ')';
+    el.className = 'stat-change ' + (pctClass(data.indices.kosdaq.changePct) === 'chg-up' ? 'up' : 'down');
+  }
+  if (data.indices?.usdKrw) {
+    document.getElementById('usdkrw-value').textContent = fmtNum(data.indices.usdKrw.rate);
+    document.getElementById('usdkrw-change').textContent = '기준일 ' + data.indices.usdKrw.date;
+  }
 
-      <a class="entry" href="posts/day-001.html">
-        <div class="entry-meta">
-          <span class="plain-date">2026.07.04</span>
-        </div>
-        <h3>기준금리, 대체 왜 자꾸 이야기 나올까? — 한국은행 발표 뉴스로 배우는 금리의 기본</h3>
-        <p>"기준금리 동결"이라는 뉴스 제목만 봐도 머리가 아팠다면, 오늘 이 글 하나로 정리해봐요. 기준금리가 뭔지, 왜 오르내리는지, 내 대출·예금과는 무슨 상관인지까지.</p>
-        <div class="tag-row">
-          <span class="tag">기준금리</span>
-          <span class="tag">한국은행</span>
-          <span class="tag">통화정책</span>
-        </div>
-      </a>
+  renderTable('sector-tbody', data.sectors,
+    (r) => `<tr><td>${r.name}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${fmtNum(r.value)}</td></tr>`, 3);
 
-    </div>
-  </section>
+  renderTable('volume-tbody', data.volumeLeaders,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.volume)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 3);
 
-  <section class="section">
-    <div class="section-head">
-      <h2>이런 곳이에요</h2>
-    </div>
-    <p style="color:var(--ink-soft); font-size:15px; max-width:60ch;">
-      오늘의경제공부는 경제 기사를 그대로 옮겨오지 않아요. 기사 링크는 원문 그대로 안내해드리고,
-      그 안에 나온 개념과 용어를 초보자 눈높이에서 다시 풀어 설명하는 데 집중해요.
-      매일 잠깐씩 들러서 "오늘의 용어 하나"만 이해하고 가셔도 충분해요.
-    </p>
-  </section>
-</main>
+  const limitRows = [
+    ...(data.limitUpCandidates||[]).map(r => ({...r, type:'상한가'})),
+    ...(data.limitDownCandidates||[]).map(r => ({...r, type:'하한가'})),
+  ];
+  renderTable('limit-tbody', limitRows,
+    (r) => `<tr><td>${r.name}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td>${r.type}</td></tr>`, 3);
 
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-links">
-      <a href="about.html">소개</a>
-      <a href="privacy.html">개인정보처리방침</a>
-      <a href="contact.html">문의</a>
-    </div>
-    <div class="copyright">© 2026 TodayEcon. All rights reserved.</div>
-  </div>
-</footer>
+  renderTable('foreign-buy-tbody', data.foreignNetBuy,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${eok(r.foreignAmount)}</td></tr>`, 2);
+  renderTable('foreign-sell-tbody', data.foreignNetSell,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${eok(r.foreignAmount)}</td></tr>`, 2);
+  renderTable('inst-buy-tbody', data.institutionNetBuy,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${eok(r.institutionAmount)}</td></tr>`, 2);
+  renderTable('inst-sell-tbody', data.institutionNetSell,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${eok(r.institutionAmount)}</td></tr>`, 2);
 
+  renderTable('value-tbody', data.tradingValueTop,
+    (r, i) => `<tr><td>${i+1}</td><td>${r.name}</td><td class="num-cell">${fmtNum(Math.round(Number(r.tradingValue)/1e8))}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 4);
+
+  renderTable('short-tbody', data.shortSaleTop,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.price)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${r.shortVolumeRatio}%</td></tr>`, 4);
+
+  renderTable('credit-tbody', data.creditBalanceTop,
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.price)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${r.loanBalanceRate}%</td><td class="${pctClass(r.loanChangeRate)}">${r.loanChangeRate}%p</td></tr>`, 5);
+}
+</script>
 </body>
 </html>
