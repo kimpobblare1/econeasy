@@ -205,6 +205,8 @@
 
   .data-table{ width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; font-size:13.5px; }
   .data-table th{ background:var(--navy); color:#fff; font-weight:600; text-align:left; padding:9px 12px; font-size:12px; }
+  .data-table th.num-th{ text-align:right; }
+  .compact-table{ max-width:380px; }
   .data-table td{ padding:8px 12px; border-top:1px solid var(--border); }
   .data-table tr:nth-child(even) td{ background:rgba(28,53,80,0.025); }
   .num-cell{ font-family:var(--font-mono); text-align:right; }
@@ -420,8 +422,8 @@
       <div class="market-section">
         <h3>② 업종별 증시 변동 요약</h3>
         <p class="section-note">코스피200 섹터별 지수와 등락률</p>
-        <table class="data-table">
-          <thead><tr><th>업종</th><th>등락률</th></tr></thead>
+        <table class="data-table compact-table">
+          <thead><tr><th>업종</th><th class="num-th">등락률</th></tr></thead>
           <tbody id="sector-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
         </table>
       </div>
@@ -431,11 +433,11 @@
         <p class="section-note">거래량 상위 10 및 상한가·하한가 근접 종목</p>
         <div class="two-col">
           <table class="data-table">
-            <thead><tr><th>거래량 상위</th><th>거래량</th><th>등락률</th></tr></thead>
+            <thead><tr><th>거래량 상위</th><th class="num-th">거래량</th><th class="num-th">등락률</th></tr></thead>
             <tbody id="volume-tbody"><tr><td colspan="3">불러오는 중...</td></tr></tbody>
           </table>
           <table class="data-table">
-            <thead><tr><th>상한가 / 하한가</th><th>등락률</th><th>구분</th></tr></thead>
+            <thead><tr><th>상한가 / 하한가</th><th class="num-th">등락률</th><th>구분</th></tr></thead>
             <tbody id="limit-tbody"><tr><td colspan="3">불러오는 중...</td></tr></tbody>
           </table>
         </div>
@@ -448,11 +450,11 @@
         <div class="sub-group-label">외국인</div>
         <div class="two-col two-col-fixed">
           <table class="data-table">
-            <thead><tr><th>외국인 순매수</th><th>금액(억원)</th></tr></thead>
+            <thead><tr><th>외국인 순매수</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="foreign-buy-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
           <table class="data-table">
-            <thead><tr><th>외국인 순매도</th><th>금액(억원)</th></tr></thead>
+            <thead><tr><th>외국인 순매도</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="foreign-sell-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
         </div>
@@ -460,11 +462,11 @@
         <div class="sub-group-label">기관</div>
         <div class="two-col two-col-fixed">
           <table class="data-table">
-            <thead><tr><th>기관 순매수</th><th>금액(억원)</th></tr></thead>
+            <thead><tr><th>기관 순매수</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="inst-buy-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
           <table class="data-table">
-            <thead><tr><th>기관 순매도</th><th>금액(억원)</th></tr></thead>
+            <thead><tr><th>기관 순매도</th><th class="num-th">금액(억원)</th></tr></thead>
             <tbody id="inst-sell-tbody"><tr><td colspan="2">불러오는 중...</td></tr></tbody>
           </table>
         </div>
@@ -474,7 +476,7 @@
         <h3>⑤ 거래대금 상위</h3>
         <p class="section-note">거래대금 상위 10, 단위: 억원</p>
         <table class="data-table">
-          <thead><tr><th>순위</th><th>종목명</th><th>거래대금(억원)</th><th>등락률</th></tr></thead>
+          <thead><tr><th>순위</th><th>종목명</th><th class="num-th">거래대금(억원)</th><th class="num-th">등락률</th></tr></thead>
           <tbody id="value-tbody"><tr><td colspan="4">불러오는 중...</td></tr></tbody>
         </table>
       </div>
@@ -483,7 +485,7 @@
         <h3>⑥ 공매도 상위종목</h3>
         <p class="section-note">공매도 거래대금 비중 상위 10</p>
         <table class="data-table">
-          <thead><tr><th>종목명</th><th>현재가</th><th>등락률</th><th>공매도 거래대금(억원)</th><th>공매도 비중</th></tr></thead>
+          <thead><tr><th>종목명</th><th class="num-th">현재가</th><th class="num-th">등락률</th><th class="num-th">공매도 거래대금(억원)</th><th class="num-th">공매도 비중</th></tr></thead>
           <tbody id="short-tbody"><tr><td colspan="5">불러오는 중...</td></tr></tbody>
         </table>
       </div>
@@ -492,8 +494,8 @@
         <h3>⑦ 신용잔고 상위 (신용매매)</h3>
         <p class="section-note">신용거래 융자잔고 비율 상위 10</p>
         <table class="data-table">
-          <thead><tr><th>종목명</th><th>현재가</th><th>등락률</th><th>신용잔고 비율</th><th>전일대비 증감</th></tr></thead>
-          <tbody id="credit-tbody"><tr><td colspan="5">불러오는 중...</td></tr></tbody>
+          <thead><tr><th>종목명</th><th class="num-th">현재가</th><th class="num-th">등락률</th><th class="num-th">신용잔고 비율</th></tr></thead>
+          <tbody id="credit-tbody"><tr><td colspan="4">불러오는 중...</td></tr></tbody>
         </table>
       </div>
     </section>
@@ -601,17 +603,17 @@ function renderMarketData(data){
   }
 
   renderTable('sector-tbody', data.sectors,
-    (r) => `<tr><td>${r.name}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 2);
+    (r) => `<tr><td>${r.name}</td><td class="num-cell ${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 2);
 
   renderTable('volume-tbody', data.volumeLeaders,
-    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.volume)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 3);
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.volume)}</td><td class="num-cell ${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 3);
 
   const limitRows = [
     ...(data.limitUpCandidates||[]).map(r => ({...r, type:'상한가'})),
     ...(data.limitDownCandidates||[]).map(r => ({...r, type:'하한가'})),
   ];
   renderTable('limit-tbody', limitRows,
-    (r) => `<tr><td>${r.name}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td>${r.type}</td></tr>`, 3);
+    (r) => `<tr><td>${r.name}</td><td class="num-cell ${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td>${r.type}</td></tr>`, 3);
 
   renderTable('foreign-buy-tbody', data.foreignNetBuy,
     (r) => `<tr><td>${r.name}</td><td class="num-cell chg-up">${eok(r.foreignAmount)}</td></tr>`, 2);
@@ -623,13 +625,13 @@ function renderMarketData(data){
     (r) => `<tr><td>${r.name}</td><td class="num-cell chg-down">${eok(r.institutionAmount)}</td></tr>`, 2);
 
   renderTable('value-tbody', data.tradingValueTop,
-    (r, i) => `<tr><td>${i+1}</td><td>${r.name}</td><td class="num-cell">${fmtNum(Math.round(Number(r.tradingValue)/1e8))}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 4);
+    (r, i) => `<tr><td>${i+1}</td><td>${r.name}</td><td class="num-cell">${fmtNum(Math.round(Number(r.tradingValue)/1e8))}</td><td class="num-cell ${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td></tr>`, 4);
 
   renderTable('short-tbody', data.shortSaleTop,
-    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.price)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${fmtNum(Math.round(Number(r.shortValue)/1e8))}</td><td class="num-cell">${r.shortValueRatio}%</td></tr>`, 5);
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.price)}</td><td class="num-cell ${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${fmtNum(Math.round(Number(r.shortValue)/1e8))}</td><td class="num-cell">${r.shortValueRatio}%</td></tr>`, 5);
 
   renderTable('credit-tbody', data.creditBalanceTop,
-    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.price)}</td><td class="${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${r.loanBalanceRate}%</td><td class="${pctClass(r.loanChangeRate)}">${r.loanChangeRate}%p</td></tr>`, 5);
+    (r) => `<tr><td>${r.name}</td><td class="num-cell">${fmtNum(r.price)}</td><td class="num-cell ${pctClass(r.changePct)}">${fmtPct(r.changePct)}</td><td class="num-cell">${r.loanBalanceRate}%</td></tr>`, 4);
 }
 </script>
 </body>
